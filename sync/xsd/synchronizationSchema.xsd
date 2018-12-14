@@ -1,0 +1,18 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+
+<cd:schema xmlns:cd="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="https://github.com/hereticByte/compilationDirector/blob/master/compilationDirectives_Proto.xsd"
+           xmlns="https://github.com/hereticByte/compilationDirector/blob/master/compilationDirectives_Proto.xsd"
+           elementFormDefault="qualified">
+
+    <!--
+   See:
+   https://haxe.org/manual/compiler-usage.html
+   -->
+
+    <cd:element name="root">
+
+
+    </cd:element>
+
+</cd:schema>
