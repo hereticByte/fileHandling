@@ -1,8 +1,8 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 
-<cd:schema xmlns:cd="http://www.w3.org/2001/XMLSchema"
-           targetNamespace="https://github.com/hereticByte/compilationDirector/blob/master/compilationDirectives_Proto.xsd"
-           xmlns="https://github.com/hereticByte/compilationDirector/blob/master/compilationDirectives_Proto.xsd"
+<syn:schema xmlns:syn="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="https://github.com/hereticByte/fileHandling/blob/master/sync/xsd/synchronizationSchema.xsd"
+           xmlns="https://github.com/hereticByte/fileHandling/blob/master/sync/xsd/synchronizationSchema.xsd"
            elementFormDefault="qualified">
 
     <!--
@@ -10,9 +10,158 @@
    https://haxe.org/manual/compiler-usage.html
    -->
 
-    <cd:element name="root">
+    <syn:element name="synchronization">
+        <syn:complexType>
+            <syn:sequence>
+                <syn:element name="source" minOccurs="1" maxOccurs="1">
+                    <syn:complexType>
+                        <syn:attribute name="absolutePathFileName" use="required"/>
+                    </syn:complexType>
+                </syn:element>
+                <syn:element name="target" minOccurs="1" maxOccurs="1">
+                    <syn:complexType>
+                        <syn:attribute name="absolutePathFileName" use="required"/>
+                    </syn:complexType>
+                </syn:element>
 
+                <syn:element name="options" minOccurs="1" maxOccurs="1">
+                    <syn:complexType>
+                        <syn:attribute name="synchroType" use="required" default="synchronize">
+                            <syn:simpleType>
+                                <syn:restriction base="syn:string">
+                                    <syn:enumeration value="synchronize"/>
+                                    <syn:enumeration value="actualize"/>
+                                    <syn:enumeration value="softMirror"/>
+                                    <syn:enumeration value="hardMirror"/>
+                                </syn:restriction>
+                            </syn:simpleType>
+                        </syn:attribute>
+                        <syn:attribute name="recursiveSynchronization" use="required" default="true">
+                            <syn:simpleType>
+                                <syn:restriction base="syn:boolean"/>
+                            </syn:simpleType>
+                        </syn:attribute>
+                    </syn:complexType>
+                </syn:element>
+                <syn:element name="includeExclude" minOccurs="1" maxOccurs="1">
+                    <syn:complexType>
+                        <syn:sequence>
+                            <syn:element name="excludeERegList">
+                                <syn:complexType>
+                                    <syn:choice>
+                                        <syn:element name="eRegExpression" minOccurs="0" maxOccurs="unbounded">
+                                            <syn:complexType>
+                                                <syn:attribute name="eRegAsString" use="required"/>
+                                            </syn:complexType>
+                                        </syn:element>
+                                    </syn:choice>
+                                </syn:complexType>
+                            </syn:element>
 
-    </cd:element>
+                            <syn:element name="includeERegList">
+                                <syn:complexType>
+                                    <syn:choice>
+                                        <syn:element name="eRegExpression" minOccurs="0" maxOccurs="unbounded">
+                                            <syn:complexType>
+                                                <syn:attribute name="eRegAsString" use="required"/>
+                                            </syn:complexType>
+                                        </syn:element>
+                                    </syn:choice>
+                                </syn:complexType>
+                            </syn:element>
 
-</cd:schema>
+                            <syn:element name="excludeFilesOrFoldersList">
+                                <syn:complexType>
+                                    <syn:choice>
+                                        <syn:element name="fileOrFolder" minOccurs="0" maxOccurs="unbounded">
+                                            <syn:complexType>
+                                                <syn:attribute name="pathName" use="required"/>
+                                            </syn:complexType>
+                                        </syn:element>
+                                    </syn:choice>
+                                </syn:complexType>
+                            </syn:element>
+
+                            <syn:element name="includeFilesOrFoldersList">
+                                <syn:complexType>
+                                    <syn:choice>
+                                        <syn:element name="fileOrFolder" minOccurs="0" maxOccurs="unbounded">
+                                            <syn:complexType>
+                                                <syn:attribute name="pathName" use="required"/>
+                                            </syn:complexType>
+                                        </syn:element>
+                                    </syn:choice>
+                                </syn:complexType>
+                            </syn:element>
+                            
+                            <syn:element name="excludeExtendedCommonValidityIssues">
+                                <syn:complexType>
+                                    <syn:sequence>
+                                        <syn:element name="commonValidityIssue" minOccurs="0" maxOccurs="unbounded">
+                                            <syn:complexType>
+                                                <syn:attribute name="extendedCommonValidity" use="required">
+                                                    <syn:simpleType>
+                                                        <syn:restriction base="syn:string">
+                                                            <syn:enumeration value="freeOfIssues"/>
+                                                            <syn:enumeration value="declaredHidden_linux"/>
+                                                            <syn:enumeration value="invalidChars_win"/>
+                                                            <syn:enumeration value="germanDiacritics"/>
+                                                            <syn:enumeration value="upperCase_ASCII"/>
+                                                            <syn:enumeration value="multiplePoints"/>
+                                                            <syn:enumeration value="systemFile_win"/>
+                                                        </syn:restriction>
+                                                    </syn:simpleType>
+                                                </syn:attribute>
+                                            </syn:complexType>
+                                        </syn:element>
+
+                                        <syn:element name="folderValidityIssue" minOccurs="0" maxOccurs="unbounded">
+                                            <syn:complexType>
+                                                <syn:attribute name="extendedFolderValidity" use="required">
+                                                    <syn:simpleType>
+                                                        <syn:restriction base="syn:string">
+                                                            <syn:enumeration value="freeOfIssues"/>
+                                                            <syn:enumeration value="folderHasPoint"/>
+                                                        </syn:restriction>
+                                                    </syn:simpleType>
+                                                </syn:attribute>
+                                            </syn:complexType>
+                                        </syn:element>
+
+                                        <syn:element name="fileValidityIssue" minOccurs="0" maxOccurs="unbounded">
+                                            <syn:complexType>
+                                                <syn:attribute name="extendedFolderValidity" use="required">
+                                                    <syn:simpleType>
+                                                        <syn:restriction base="syn:string">
+                                                            <syn:enumeration value="freeOfIssues"/>
+                                                            <syn:enumeration value="trailingPointWithoutSuffix"/>
+                                                            <syn:enumeration value="invalidSuffix"/>
+                                                        </syn:restriction>
+                                                    </syn:simpleType>
+                                                </syn:attribute>
+                                            </syn:complexType>
+                                        </syn:element>
+
+                                    </syn:sequence>
+                                </syn:complexType>
+                            </syn:element>
+
+                        </syn:sequence>
+                    </syn:complexType>
+
+                </syn:element>
+
+            </syn:sequence>
+            <syn:attribute name="version" use="required" default="1.4.67">
+                <syn:simpleType>
+                    <syn:restriction base="syn:string">
+                        <!-- Complement with any version ever used! -->
+                        <syn:enumeration value="1.4.67"/>
+                    </syn:restriction>
+                </syn:simpleType>
+            </syn:attribute>
+        </syn:complexType>
+
+    </syn:element>
+
+</syn:schema>
